@@ -1,10 +1,10 @@
 import React from 'react'
-import { RingLoader } from 'react-spinners';
+import { MoonLoader } from 'react-spinners';
 
 export default function Loading() {
   return (
-    <div>
-      <RingLoader color="#3498db" size={150} />
+    <div className='w-full h-screen flex justify-center items-center'>
+      <MoonLoader color="#ff81a9" size={60} />
     </div>
   )
 }
