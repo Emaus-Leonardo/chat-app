@@ -16,7 +16,7 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center bg-white">
+    <div className="w-full h-screen flex flex-col justify-center items-center bg-[#FAE4EB]">
       <div className="flex justify-center items-center bg-[#F8F8F8] rounded-[30px] shadow-lg overflow-hidden gap-7">
         <aside className="flex justify-start items-start">
           <img
@@ -40,7 +40,7 @@ export default function Login() {
           <div className="h-full flex justify-center items-center pr-7">
             <button
               onClick={signInWithGoogle}
-              className="flex items-center px-6 py-3 bg-white text-black font-semibold rounded-full shadow-md hover:bg-[#f5f5f5] transition-colors"
+              className="flex items-center px-6 py-3 bg-[#FAE4EB] text-black font-semibold rounded-full shadow-md hover:bg-[#fccfde] transition-all duration-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
