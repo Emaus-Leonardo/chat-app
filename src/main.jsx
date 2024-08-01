@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from './services/firebase.js'; 
 import ReactDOM from 'react-dom/client';
 
 import Login from './components/Login/index.jsx';
 import Loading from './components/Loading/index.jsx';
+import Sidebar from "./components/Sidebar/index.jsx"
+
+
 import './index.css';
 
 function App() {
   const [user, loading] = useAuthState(auth);
+  const [userChat, setUserChat] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -29,7 +33,7 @@ function App() {
 
   if (!user) return <Login />;
 
-  return <div>Welcome, {user.displayName || 'User'}!</div>; 
+  return <div><Sidebar setUserChat={setUserChat} userChat={userChat} /></div>; 
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
