@@ -59,5 +59,3 @@ function SidebarHeader() {
 }
 
 export default SidebarHeader;
-
-pode arrumar nesse tmb?
