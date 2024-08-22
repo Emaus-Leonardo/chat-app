@@ -1,11 +1,11 @@
 import React from "react";
 import { auth, provider } from "../../services/firebase";
+import { signInWithPopup } from "firebase/auth";  
 import Aside from "../../assets/blossom.png";
 
 export default function Login() {
   const signInWithGoogle = () => {
-    auth
-      .signInWithPopup(provider)
+    signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
         console.log("Usuário autenticado:", user);

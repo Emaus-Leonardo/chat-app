@@ -7,8 +7,9 @@ import Login from './components/Login/index.jsx';
 import Loading from './components/Loading/index.jsx';
 import Sidebar from "./components/Sidebar/index.jsx"
 
-
 import './index.css';
+
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -16,15 +17,18 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      const userDocRef = db.collection('users').doc(user.uid);
+      
+      const userDocRef = doc(db, 'users', user.uid);
 
-      userDocRef.get().then((doc) => {
-        if (!doc.exists) {
-          userDocRef.set({
+      getDoc(userDocRef).then((docSnap) => {
+        if (!docSnap.exists()) {
+          setDoc(userDocRef, {
             email: user.email,
             photoURL: user.photoURL,
           });
         }
+      }).catch((error) => {
+        console.error("Erro ao buscar ou criar documento do usuário:", error);
       });
     }
   }, [user]);

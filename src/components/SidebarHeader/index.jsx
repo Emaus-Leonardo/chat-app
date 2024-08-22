@@ -1,19 +1,24 @@
 import React from "react";
-
 import { MdDonutLarge, MdMoreVert, MdChat } from "react-icons/md";
 import * as EmailValidator from "email-validator";
 import { auth, db } from "../../services/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
+import { collection, query, where, addDoc } from "firebase/firestore";
 
 function SidebarHeader() {
   const [user] = useAuthState(auth);
-  const refChat = db
-    .collection("chats")
-    .where("user", "array-contains", user.email);
+
+  if (!user) {
+    console.error("Usuário não está autenticado");
+    return null; 
+  }
+
+  const chatRef = collection(db, "chats"); 
+  const refChat = query(chatRef, where("users", "array-contains", user.email));
   const [chatsSnapshot] = useCollection(refChat);
 
-  const handleCreateChat = () => {
+  const handleCreateChat = async () => {
     const emailInput = prompt("Escreva o e-mail desejado");
 
     if (!emailInput) return;
@@ -26,7 +31,7 @@ function SidebarHeader() {
       return alert("Chat já existe");
     }
 
-    db.collection("chats").add({
+    await addDoc(chatRef, {
       users: [user.email, emailInput],
     });
   };
@@ -43,16 +48,16 @@ function SidebarHeader() {
         className="w-[35px] h-[35px] cursor-pointer rounded-[50%]"
         src={user?.photoURL}
         alt="User Avatar"
-        onClick={() => [auth.signOut(), setUserChat(null)]}
+        onClick={() => auth.signOut()}
       />
 
       <div className="flex gap-[10px]">
-        <MdDonutLarge className="w-[24px] h-[24px] bg-[#54656f] cursor-pointer" />
+        <MdDonutLarge className="w-[24px] h-[24px] cursor-pointer" />
         <MdChat
           onClick={handleCreateChat}
-          className="w-[24px] h-[24px] bg-[#54656f] cursor-pointer"
+          className="w-[24px] h-[24px] cursor-pointer"
         />
-        <MdMoreVert className="w-[24px] h-[24px] bg-[#54656f] cursor-pointer" />
+        <MdMoreVert className="w-[24px] h-[24px] cursor-pointer" />
       </div>
     </div>
   );
