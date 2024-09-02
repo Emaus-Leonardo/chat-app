@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { db } from "../../services/firebase";
 import { MdPerson } from "react-icons/md";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collection, query, where } from "firebase/firestore";
+
+const getUser = (users, userLogged) => 
+  users?.filter((user) => user !== userLogged?.email)[0];
 
 function SidebarChatsItem({ id, users, user, setUserChat, active }) {
-  const chatUser = users?.filter((email) => email !== user?.email)[0];
+  const chatUser = getUser(users, user);
+  const [value, loading, error] = useCollection(
+    query(collection(db, "users"), where("email", "==", chatUser))
+  );
 
-  const getUser = (users, userLogged) =>
-    users?.filter((user) => user !== userLogged?.email)[0];
-
-    const Avatar = getUserItem?.docs?.[0]?.data();
-    const item = getUser(users, user)
-
+  const Avatar = value?.docs?.[0]?.data();
+  
   const handleNewChat = () => {
     const userChat = {
       chatId: id,
-      name: item?.split("@")[0],
-      photoURL: Avatar?.photoURL, 
+      name: chatUser?.split("@")[0],
+      photoURL: Avatar?.photoURL,
     };
 
     setUserChat(userChat);
@@ -23,11 +28,17 @@ function SidebarChatsItem({ id, users, user, setUserChat, active }) {
   return (
     <div
       onClick={handleNewChat}
-      className={`flex items-center justify-start py-[15px] px-[20px] cursor-pointer hover:bg-[#f0f2f5] ${active ? 'bg-gray-200' : ''}`}
+      className={`flex items-center py-3 px-4 cursor-pointer hover:bg-[#f0f2f5] ${active ? 'bg-gray-200' : ''}`}
     >
-      <MdPerson className="w-8 h-8 text-gray-500" />
-      <div className="ml-4">
-        <p className="text-gray-700 font-medium">{chatUser?.split("@")[0]}</p>
+      {loading ? (
+        <div className="w-8 h-8 rounded-full bg-gray-300 animate-pulse" />
+      ) : Avatar?.photoURL ? (
+        <img src={Avatar.photoURL} alt="Avatar" className="w-8 h-8 rounded-full" />
+      ) : (
+        <MdPerson className="w-8 h-8  text-gray-500 bg-gray-300 rounded-full" />
+      )}
+      <div className="ml-3">
+        <p className="text-gray-800 font-medium">{chatUser?.split("@")[0] || "Unknown"}</p>
       </div>
     </div>
   );

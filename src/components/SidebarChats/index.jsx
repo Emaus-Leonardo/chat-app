@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { auth, db } from "../../services/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
@@ -29,14 +29,15 @@ function SidebarChats({ setUserChat, userChat }) {
               key={chat.id}
               id={chat.id}
               users={chat.data().users}
+              user={user}
               setUserChat={setUserChat}
-              userChat={userChat?.chatId === chat.id ? "active" : ""}
+              active={userChat?.chatId === chat.id}
             />
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default SidebarChats;
