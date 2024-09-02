@@ -35,7 +35,7 @@ function SidebarChatsItem({ id, users, user, setUserChat, active }) {
       ) : Avatar?.photoURL ? (
         <img src={Avatar.photoURL} alt="Avatar" className="w-8 h-8 rounded-full" />
       ) : (
-        <MdPerson className="w-8 h-8  text-gray-500 bg-gray-300 rounded-full" />
+        <MdPerson className="w-8 h-8 text-gray-500 bg-gray-300 rounded-full" />
       )}
       <div className="ml-3">
         <p className="text-gray-800 font-medium">{chatUser?.split("@")[0] || "Unknown"}</p>
