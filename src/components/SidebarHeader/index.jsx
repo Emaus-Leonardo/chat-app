@@ -44,12 +44,15 @@ function SidebarHeader() {
 
   return (
     <div className="h-[59px] bg-[#f0f2f5] px-4 py-2 flex items-center justify-between mb-[5px] shadow-sm">
-      <img
-        className="w-[35px] h-[35px] cursor-pointer rounded-[50%]"
-        src={user?.photoURL}
-        alt="User Avatar"
-        onClick={() => auth.signOut()}
-      />
+      <div className="flex items-center gap-[10px]">
+        <img
+          className="w-[35px] h-[35px] cursor-pointer rounded-[50%]"
+          src={user?.photoURL}
+          alt="User Avatar"
+          onClick={() => auth.signOut()}
+        />
+        <span className="font-semibold">{user?.displayName}</span> 
+      </div>
 
       <div className="flex gap-[10px]">
         <MdDonutLarge className="w-[24px] h-[24px] cursor-pointer" />

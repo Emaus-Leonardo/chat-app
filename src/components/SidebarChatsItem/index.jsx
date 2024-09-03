@@ -28,20 +28,21 @@ function SidebarChatsItem({ id, users, user, setUserChat, active }) {
   return (
     <div
       onClick={handleNewChat}
-      className={`flex items-center py-3 px-4 cursor-pointer hover:bg-[#f0f2f5] ${active ? 'bg-gray-200' : ''}`}
+      className={`flex items-center py-3 px-4 cursor-pointer hover:bg-[#f0f2f5] ${active ? 'bg-gray-200' : ''} border-b border-gray-300`}
     >
       {loading ? (
         <div className="w-8 h-8 rounded-full bg-gray-300 animate-pulse" />
       ) : Avatar?.photoURL ? (
         <img src={Avatar.photoURL} alt="Avatar" className="w-8 h-8 rounded-full" />
       ) : (
-        <MdPerson className="w-8 h-8 text-gray-500 bg-gray-300 rounded-full" />
+        <MdPerson className="w-8 h-8 p-[3px] text-gray-500 bg-gray-300 rounded-full" />
       )}
       <div className="ml-3">
-        <p className="text-gray-800 font-medium">{chatUser?.split("@")[0] || "Unknown"}</p>
+        <p className="text-gray-800 font-medium">{chatUser?.split("@")[0]}</p>
       </div>
     </div>
   );
 }
 
 export default SidebarChatsItem;
+
